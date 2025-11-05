@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { ChevronRight } from 'lucide-react'
+import Spline from '@splinetool/react-spline'
 
 export default function Hero() {
   return (
@@ -29,17 +30,17 @@ export default function Hero() {
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
-                href="#join"
+                href="#profiles"
                 className="group inline-flex items-center gap-2 rounded-full bg-rose-500 px-6 py-3 text-white font-medium shadow-lg shadow-rose-200/50 hover:bg-rose-600 transition transform hover:-translate-y-0.5"
               >
-                Book a Free Consultation
+                Explore Profiles
                 <ChevronRight className="size-4 transition group-hover:translate-x-0.5" />
               </a>
               <a
-                href="#profiles"
+                href="#about"
                 className="inline-flex items-center rounded-full px-6 py-3 text-rose-700 bg-white/70 ring-1 ring-rose-200 hover:ring-rose-300 transition"
               >
-                Explore Profiles
+                Learn More
               </a>
             </div>
           </motion.div>
@@ -49,22 +50,12 @@ export default function Hero() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7 }}
-            className="relative"
+            className="relative h-[420px] md:h-[520px]"
           >
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop"
-                alt="Elegant wedding couple"
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-white/30" />
+            <div className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-neutral-200 bg-white/60">
+              <Spline scene="https://prod.spline.design/qQUip0dJPqrrPryE/scene.splinecode" style={{ width: '100%', height: '100%' }} />
             </div>
-            <div className="absolute -bottom-6 -left-6 hidden md:block">
-              <div className="rounded-2xl bg-white/80 ring-1 ring-neutral-200 p-4 shadow backdrop-blur">
-                <p className="text-sm font-medium text-neutral-800">Warm, pastel aesthetics</p>
-                <p className="text-xs text-neutral-600">Peach, white and green highlights</p>
-              </div>
-            </div>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
           </motion.div>
         </div>
       </div>

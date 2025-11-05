@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import GalleryGrid from './components/GalleryGrid'
 import AboutSection from './components/AboutSection'
+import ProfilesSection from './components/ProfilesSection'
+import AuthModal from './components/AuthModal'
 
 function Footer() {
   return (
@@ -40,15 +42,48 @@ function Footer() {
 }
 
 export default function App() {
+  const [authOpen, setAuthOpen] = useState(false)
+  const [authMode, setAuthMode] = useState('login')
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const existing = localStorage.getItem('vb_user')
+    if (existing) setUser(JSON.parse(existing))
+  }, [])
+
+  const handleAuthSuccess = (account) => {
+    setUser(account)
+  }
+
   return (
     <div className="min-h-screen antialiased text-neutral-900">
-      <Navbar />
+      <Navbar
+        currentUser={user}
+        onLoginClick={() => { setAuthMode('login'); setAuthOpen(true) }}
+        onSignupClick={() => { setAuthMode('signup'); setAuthOpen(true) }}
+      />
+
+      {user && (
+        <div className="bg-emerald-50 border-b border-emerald-200">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2 text-sm text-emerald-800">
+            Welcome, <span className="font-medium">{user.name}</span> 👋
+          </div>
+        </div>
+      )}
+
       <main>
         <Hero />
-        <GalleryGrid />
+        <ProfilesSection currentUser={user} />
         <AboutSection />
       </main>
       <Footer />
+
+      <AuthModal
+        open={authOpen}
+        mode={authMode}
+        onClose={() => setAuthOpen(false)}
+        onAuthSuccess={handleAuthSuccess}
+      />
     </div>
   )
 }

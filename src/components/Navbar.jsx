@@ -10,7 +10,7 @@ const navItems = [
   { label: 'Contact', href: '#contact' },
 ]
 
-export default function Navbar() {
+export default function Navbar({ onLoginClick, onSignupClick, currentUser }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -34,12 +34,24 @@ export default function Navbar() {
                 {item.label}
               </a>
             ))}
-            <a
-              href="#join"
-              className="inline-flex items-center rounded-full bg-rose-500 text-white px-4 py-2 text-sm font-medium shadow hover:bg-rose-600 active:scale-[0.98] transition"
-            >
-              Join Now
-            </a>
+            {currentUser ? (
+              <div className="text-sm text-neutral-700">Hi, <span className="font-medium">{currentUser.name}</span></div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={onLoginClick}
+                  className="inline-flex items-center rounded-full bg-rose-500 text-white px-4 py-2 text-sm font-medium shadow hover:bg-rose-600 active:scale-[0.98] transition"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={onSignupClick}
+                  className="inline-flex items-center rounded-full bg-rose-500 text-white px-4 py-2 text-sm font-medium shadow hover:bg-rose-600 active:scale-[0.98] transition"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
           </div>
 
           <button
@@ -64,13 +76,14 @@ export default function Navbar() {
                   {item.label}
                 </a>
               ))}
-              <a
-                href="#join"
-                className="mt-2 inline-flex items-center justify-center rounded-full bg-rose-500 text-white px-4 py-2 text-sm font-medium shadow hover:bg-rose-600 transition"
-                onClick={() => setOpen(false)}
-              >
-                Join Now
-              </a>
+              {currentUser ? (
+                <div className="mt-2 px-3 text-sm">Hi, <span className="font-medium">{currentUser.name}</span></div>
+              ) : (
+                <div className="mt-2 grid grid-cols-2 gap-2 px-3">
+                  <button onClick={() => { onLoginClick?.(); setOpen(false) }} className="rounded-full bg-rose-500 text-white px-4 py-2 text-sm font-medium">Login</button>
+                  <button onClick={() => { onSignupClick?.(); setOpen(false) }} className="rounded-full bg-rose-500 text-white px-4 py-2 text-sm font-medium">Sign Up</button>
+                </div>
+              )}
             </div>
           </div>
         )}
